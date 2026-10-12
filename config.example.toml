@@ -1,0 +1,40 @@
+# caltools configuration. Copy to ~/.config/caltools/config.toml and adjust.
+
+[defaults]
+# Output language: "de" or "en". Can be overridden with `free --lang`.
+language = "de"
+# Working day used by `free`. Override per call with `free --start/--end`.
+work_start = "09:00"
+work_end = "17:00"
+# Weekdays that are never offered as free. Add further days off, e.g. ["fri", "sat", "sun"].
+# `free --days weekday` ignores this and uses Mon-Fri; `--days all` uses every day.
+off_days = ["sat", "sun"]
+# Free gaps shorter than this are not listed. Override with `free --min`.
+min_free_minutes = 30
+# true: an all-day event (e.g. vacation) blocks the whole day; false: all-day events are ignored.
+all_day_events_block = true
+# Calendar entry (below) used when `--calendar` is not given.
+calendar = "work"
+# IANA time zone for working hours and output. Default: the system time zone. Set it on
+# machines without a configured time zone (the tool warns and falls back to UTC there).
+timezone = "Europe/Berlin"
+
+[calendars.work]
+# CalDAV server base URL (principal discovery) or the user's calendar-home URL.
+url = "https://cloud.example.org/remote.php/dav/"
+username = "me"
+# Exactly one of the following three, or none if the server needs no authentication:
+# password = "..."
+password_env = "CALTOOLS_WORK_PASSWORD"
+# password_cmd = "pass show cloud.example.org/me"
+# Display name of the calendar on the server (`caltools calendars` lists them) ...
+calendar = "Arbeit"
+# ... or, alternatively, the calendar's full URL:
+# calendar_url = "https://cloud.example.org/remote.php/dav/calendars/me/arbeit/"
+# If neither is given, `url` itself must be the calendar's URL.
+
+[calendars.private]
+url = "https://caldav.example.net/"
+username = "me@example.net"
+password_cmd = "pass show caldav.example.net"
+calendar = "Privat"
